@@ -56,6 +56,7 @@ int main() {
 	1. Logger*: Pointer to the logger to intialise
 	2. enum Levels: The MINIMUM logging level to be printed. This follows the traditional 5 tiered scheme of DEBUG, INFO, WARN, ERROR, CRITICAL
 	3. const char*: The filestream to be printed to. **To print to stdout, call log_init() with NULL as the filestream arg**
+    
 	log_init() sets defaults for the structs members, and opens the requested filestream
 
 4. Call the LOG() macro as many times as needed to print to the requested filestream. This again takes 3 arguments:
