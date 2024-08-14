@@ -4,27 +4,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-/* EXAMPLE CODE FOR INTIALISATION AND USAGE
-
-#include <stdio.h>
-#include "logger.h"
-
-Logger* log;
-
-int main() {
-	log = malloc(sizeof(Logger));
-	log_init(log);
-	LOG(log, DEBUG, "This is a debug message");
-
-	// Example of changing settings
-	log->time_enabled = false;
-
-  // log_kill() handles freeing of memory for you
-  log_kill(log)
-}
-*/
-
-
 // This macro should be called instead of calling _log_print() directly. This is to avoid verbosity in function calls
 // Example call: LOG(log, DEBUG, "Finished Calculations")
 #define LOG(log, level, msg) _log_print(__func__, __LINE__, log, level, msg)
@@ -72,6 +51,7 @@ inline const char* _get_color_code(Color color) {
 	}
 
 }
+
 // DESC: _log_err() is called whenever there is a USER error.
 inline void _log_err(const char* msg) {
 	fprintf(stderr, "[LOG ERROR]: %s\n", msg);
