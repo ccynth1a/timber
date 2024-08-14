@@ -38,7 +38,7 @@ typedef struct Logger {
 
 // DESC: Returns the ANSI color code of the color type
 // NOTE: this was implemented to make editing the logger configuration less confusing on the user end. Future Charlotte: yes, i do in fact know that strncpy exists
-inline const char* _get_color_code(Color color) {
+static inline const char* _get_color_code(Color color) {
 	switch (color) {
 		case COLOR_GREEN: return "\033[32m";
 		case COLOR_YELLOW: return "\x1b[33m";
@@ -53,13 +53,13 @@ inline const char* _get_color_code(Color color) {
 }
 
 // DESC: _log_err() is called whenever there is a USER error.
-inline void _log_err(const char* msg) {
+static inline void _log_err(const char* msg) {
 	fprintf(stderr, "[LOG ERROR]: %s\n", msg);
 }
 
 // NOTE: Function must be called before you log
 // DESC: Sets up the logger, opens the file and validates the inputs are actually usable
-inline void log_init(Logger* log,enum Levels min_level, const char* file_name) {
+static inline void log_init(Logger* log, const enum Levels min_level, const char* file_name) {
 	//Initialising Defaults
 	log->time_enabled = true;
 	log->line_enabled = true;
@@ -79,7 +79,7 @@ inline void log_init(Logger* log,enum Levels min_level, const char* file_name) {
 		log->stream = stdout;
 	}
 
-	if (min_level>5 || min_level<1) {
+	if (min_level>4 || min_level<0) {
 		_log_err("Invalid Minimum Log Level");
 		log->min_level = 1;
 	} else {
@@ -88,15 +88,15 @@ inline void log_init(Logger* log,enum Levels min_level, const char* file_name) {
 }
 
 // DESC: Kill requested logger
-inline void log_kill(Logger* log) {
+static inline void log_kill(Logger* log) {
 	if (log->stream != NULL) {fclose(log->stream);}
-  free(log)
+  free(log);
 	log = NULL; // set pointer to NULL
 }
 
 // NOTE: This function uses a macro to simplify calling. args "function" and "line" should not be input manually by the user
 // DESC: Produces and prints a formatted output using the configuration from the logger struct.
-inline void _log_print(const char* function, const int line, Logger* log, enum Levels level, const char* msg) {
+static inline void _log_print(const char* function, const int line, Logger* log, const enum Levels level, const char* msg) {
 	const char* levels[] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"};
 	time_t now = time(NULL);
 	//Handling of Errors
@@ -121,9 +121,17 @@ inline void _log_print(const char* function, const int line, Logger* log, enum L
 		snprintf(sn_buffer, sizeof(sn_buffer), "At Line: %d", line);
 		strcat(optional_output, sn_buffer);
 	}
-		
-	fprintf(log->stream, "%s%s [%s]: %s\n", _get_color_code(log->output_colors[level]), optional_output, levels[level], msg);
-	
-	//Reset colors
-	fprintf(log->stream, "%s", _get_color_code(ANSI_RESET));
+  // Finally, check that the level is greater than or equal to the minimum printing level
+  if (level < log->min_level) {
+    return;
+  }
+  
+  // Don't print escape codes if the output is anything but stdout
+  if (log->stream != stdout) {
+    fprintf(log->stream, "%s [%s]: %s\n", optional_output, levels[level], msg);
+  } else {
+    fprintf(log->stream, "%s%s [%s]: %s\n", _get_color_code(log->output_colors[level]), optional_output, levels[level], msg);
+    //Reset colors 
+    fprintf(log->stream, "%s", _get_color_code(ANSI_RESET));
+  }
 }
