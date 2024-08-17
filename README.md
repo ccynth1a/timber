@@ -6,15 +6,15 @@ This is a personal project, first time writing any sort of library myself. Comin
 
 ## Index
 
-[Installation](##Installation/Compilation)
+[Installation](##installation-compilation)
 
-[Project Specific Notes](##Notes)
+[Project Specific Notes](##notes)
 
-[Example Code](##Examples)
+[Example Code](##examples)
 
-[Configuration](##Configuration)
+[Configuration](##configuration)
 
-[Contact Me](##Contact)
+[Contact Me](##contact-me)
 
 ## Installation/Compilation
 
@@ -112,6 +112,6 @@ As for the colors, the current options are:
 - COLOR_CYAN
 - COLOR_RED
 
-## Contact
+## Contact Me
 
 If you have any bugs/issues, please contact me via the usual avenues (Tumblr probably) or directly on Github.
