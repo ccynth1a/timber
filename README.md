@@ -6,15 +6,15 @@ This is a personal project, first time writing any sort of library myself. Comin
 
 ## Index
 
-[Installation](##installation-compilation)
+[Installation](#installation-compilation)
 
-[Project Specific Notes](##notes)
+[Project Specific Notes](#notes)
 
-[Example Code](##examples)
+[Example Code](#examples)
 
-[Configuration](##configuration)
+[Configuration](#configuration)
 
-[Contact Me](##contact-me)
+[Contact Me](#contact-me)
 
 ## Installation/Compilation
 
