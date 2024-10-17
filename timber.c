@@ -115,9 +115,9 @@ void _log_print(const char *function, const int line,
   
   // Don't print escape codes if the output is anything but stdout
   if (log->stream != stdout) {
-    fprintf(log->stream, "%s [%s]: %s\n", optional_output, levels[level], msg);
+    fprintf(log->stream, "%s\n[%s]: %s\n", optional_output, levels[level], msg);
   } else {
-    fprintf(log->stream, "%s%s [%s]: %s\n", _get_color_code(log->output_colors[level]), optional_output, levels[level], msg);
+    fprintf(log->stream, "%s%s\n[%s]: %s\n", _get_color_code(log->output_colors[level]), optional_output, levels[level], msg);
     //Reset colors 
     fprintf(log->stream, "%s", _get_color_code(ANSI_RESET));
   }
