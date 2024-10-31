@@ -1,8 +1,10 @@
-# timber
+# timber v1.2.1
 
 ## Intro
 
 This is a personal project, first time writing any sort of library myself. Coming from Python (with one of the best standard library loggers), I was really not satisfied with C's lack of one, so I wrote this really basic debugger library that works relatively similarly to how Python's does.
+
+For C++ developers, see [timber++](https://github.com/ccynth1a/timber++)
 
 ## Index
 
