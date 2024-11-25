@@ -86,6 +86,7 @@ int main()
 	1. logger_t *: Pointer to the logger to print to
 	2. enum Levels: The level to print at
 	3. const char *: The message to be printed along with debug information **NOTE: AS OF V1.3.0 FORMAT STRINGS ARE NOW SUPPORTED**
+
 	**NOTE**: The reason this is a macro and not a function is because of the \_\_LINE\_\_ and \_\_func\_\_ constants used in the optional printing process. The real function this calls is \_log\_print()
 
 5. Call log_kill() to free the memory and set the pointer to NULL, and close the attached filestream (unless its stdout).
