@@ -51,7 +51,7 @@ The way the library works is simple enough, it includes a new struct type called
 
 ### Basic Usage:
 
-This makes the assumption you already know how to work with relative paths, include directories, and GNU ld. If you need a project template, be sure to check [CXX Project Template](https://github.com/ccynth1a/cxxtemplate), this is what I exclusively use Timber with.
+This makes the assumption you already know how to work with relative paths, includes, and GNU LD (or the linker of your choice if you're smelly like that). If you need a project template, be sure to check [CXX Project Template](https://github.com/ccynth1a/cxxtemplate), this is what I exclusively use Timber with.
 
 ```c
 #include "timber.h"
