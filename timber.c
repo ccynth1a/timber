@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdarg.h>
 
 // DESC: Returns the ANSI color code of the color type
 // NOTE: this was implemented to make editing the logger configuration less confusing on the user end. Future Charlotte: yes, i do in fact know that strncpy exists
@@ -73,7 +74,7 @@ void log_kill(logger_t *log)
 // NOTE: This function uses a macro to simplify calling. args "function" and "line" should not be input manually by the user
 // DESC: Produces and prints a formatted output using the configuration from the logger struct.
 void _log_print(const char *function, const int line,
-                logger_t *log, const enum Levels level, const char *msg)
+                logger_t *log, const enum Levels level, const char *msg, ...)
 {
 	const char *levels[] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"};
 	time_t now = time(NULL);
@@ -112,13 +113,19 @@ void _log_print(const char *function, const int line,
   if (level < log->min_level) {
     return;
   }
+
+  va_list args;
+  va_start(args, msg);
   
   // Don't print escape codes if the output is anything but stdout
   if (log->stream != stdout) {
-    fprintf(log->stream, "—————————————————————\n%s\n[%s]: %s\n—————————————————————\n", optional_output, levels[level], msg);
+    fprintf(log->stream, "—————————————————————\n%s\n[%s]: ", optional_output, levels[level]);
+    vfprintf(log->stream, msg, args);
+    fprintf(log->stream, "\n—————————————————————\n");
   } else {
-    fprintf(log->stream, "%s—————————————————————\n%s\n[%s]: %s\n—————————————————————\n", _get_color_code(log->output_colors[level]), optional_output, levels[level], msg);
+    fprintf(log->stream, "%s—————————————————————\n%s\n[%s]: ", _get_color_code(log->output_colors[level]), optional_output, levels[level]);
+    vfprintf(log->stream, msg, args);
     //Reset colors 
-    fprintf(log->stream, "%s", _get_color_code(ANSI_RESET));
+    fprintf(log->stream, "\n—————————————————————\n%s", _get_color_code(ANSI_RESET));
   }
 }

@@ -4,10 +4,11 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 // This macro should be called instead of calling _log_print() directly. This is to avoid verbosity in function calls
 // Example call: LOG(log, DEBUG, "Finished Calculations")
-#define LOG(log, level, msg) _log_print(__func__, __LINE__, log, level, msg)
+#define LOG(log, level, msg, ...) _log_print(__func__, __LINE__, log, level, msg, __VA_ARGS__)
 
 typedef enum {
 	COLOR_RESET,
@@ -46,6 +47,6 @@ void log_kill(logger_t *log);
 
 // NOTE: This function uses a macro to simplify calling. args "function" and "line" should not be input manually by the user
 // DESC: Produces and prints a formatted output using the configuration from the logger struct.
-void _log_print(const char *function, const int line, logger_t *log, const enum Levels level, const char *msg);
+void _log_print(const char *function, const int line, logger_t *log, const enum Levels level, const char *msg, ...);
 
 #endif

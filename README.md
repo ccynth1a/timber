@@ -1,8 +1,8 @@
-# timber v1.2.1
+# timber v1.3.0
 
 ## Intro
 
-This is a personal project, first time writing any sort of library myself. Coming from Python (with one of the best standard library loggers), I was really not satisfied with C's lack of one, so I wrote this really basic debugger library that works relatively similarly to how Python's does.
+This is a personal project, first time writing any sort of library myself. Coming from Python (with one of the best standard library loggers), I was really not satisfied with C's lack of one, so I wrote this really basic debugger library that works relatively similarly to how Python's does. This code was written when I was very new to C, and has kinda been monkey patched since to add features as and when I need them. The lack of even a Makefile should tell you everything you need to know
 
 For C++ developers, see [timber++](https://github.com/ccynth1a/timber++)
 
@@ -51,6 +51,8 @@ The way the library works is simple enough, it includes a new struct type called
 
 ### Basic Usage:
 
+This makes the assumption you already know how to work with relative paths, include directories, and GNU ld. If you need a project template, be sure to check [CXX Project Template](https://github.com/ccynth1a/cxxtemplate), this is what I exclusively use Timber with.
+
 ```c
 #include "timber.h"
 #include <stdio.h>
@@ -62,7 +64,7 @@ int main()
 {
 	log = malloc(sizeof(logger_t));
 	log_init(log, DEBUG, NULL);
-	LOG(log, DEBUG, "Example Message");
+	LOG(log, DEBUG, "Example Message %p <- Example of Format Specifier", &log);
 	log_kill(log);
 }
 ```
@@ -83,7 +85,7 @@ int main()
 4. Call the LOG() macro as many times as needed to print to the requested filestream. This again takes 3 arguments:
 	1. logger_t *: Pointer to the logger to print to
 	2. enum Levels: The level to print at
-	3. const char *: The message to be printed along with debug information
+	3. const char *: The message to be printed along with debug information **NOTE: AS OF V1.3.0 FORMAT STRINGS ARE NOW SUPPORTED**
 	**NOTE**: The reason this is a macro and not a function is because of the \_\_LINE\_\_ and \_\_func\_\_ constants used in the optional printing process. The real function this calls is \_log\_print()
 
 5. Call log_kill() to free the memory and set the pointer to NULL, and close the attached filestream (unless its stdout).
