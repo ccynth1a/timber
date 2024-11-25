@@ -4,7 +4,7 @@
 
 This is a personal project, first time writing any sort of library myself. Coming from Python (with one of the best standard library loggers), I was really not satisfied with C's lack of one, so I wrote this really basic debugger library that works relatively similarly to how Python's does. This code was written when I was very new to C, and has kinda been monkey patched since to add features as and when I need them. The lack of even a Makefile should tell you everything you need to know
 
-For C++ developers, see [timber++](https://github.com/ccynth1a/timber++)
+For C++ developers, see [timber++](https://github.com/ccynth1a/timberplusplus)
 
 ## Index
 
